@@ -77,11 +77,15 @@ Chisel的API文档：https://www.chisel-lang.org/api/latest/
 
 FIRRTL是Chisel在Chisel3版本引入的框架中间代码层语言，类似于LLVM的存在。在Chisel3版本中，框架工具的编译链条是由Scala到FIRRTL再到Verilog。FIRRTL的引入使得框架的前后端实际上都可以替换为其他的语言。PyHCL的目标语言就是FIRRTL，并调用FIRRTL编译器生成Verilog代码。因此要使用PyHCL需要配置FIRRTL环境。
 
-在FIRRTL的Github repo当中有详细说明FIRRTL的安装配置过程：https://github.com/freechipsproject/firrtl#installation-instructions；你需要依照上面的说明安装verilator、yosys以及sbt，这是FIRRTL所依赖的环境。接着需要编译安装FIRRTL，如果没有问题，则会在/firrtl/utils/bin当中生成firrtl的可执行文件。接下来你需要将它加入到系统的环境变量当中，针对不同的操作系统，添加环境变量的方法都不一样，这个需要自行上网查阅方法。最终，如果成功将firrtl加入到环境变量当中，在终端中输入`firrtl --help`就可以显示firrtl的命令的相关信息。
+在FIRRTL的Github repo当中有详细说明FIRRTL的安装配置过程：https://github.com/freechipsproject/firrtl#installation-instructions。
+
+你需要依照上面的说明安装verilator、yosys以及sbt，这是FIRRTL所依赖的环境。接着需要编译安装FIRRTL，如果没有问题，则会在/firrtl/utils/bin当中生成firrtl的可执行文件。接下来你需要将它加入到系统的环境变量当中，针对不同的操作系统，添加环境变量的方法都不一样，这个需要自行上网查阅方法。最终，如果成功将firrtl加入到环境变量当中，在终端中输入`firrtl --help`就可以显示firrtl的命令的相关信息。
 
 ## Verilator
 
-Verilator是目前速度最快的开源仿真工具，其原理是将Verilog代码编译成高度并行化的C++代码来执行。它是很多仿真平台（包括Cocotb）以及FIRRTL、Chisel必须的工具之一。Verilator的安装方法可以在官网找到：https://www.veripool.org/projects/verilator/wiki/Installing。这里简述一下安装的方法：
+Verilator是目前速度最快的开源仿真工具，其原理是将Verilog代码编译成高度并行化的C++代码来执行。它是很多仿真平台（包括Cocotb）以及FIRRTL、Chisel必须的工具之一。Verilator的安装方法可以在官网找到：https://www.veripool.org/projects/verilator/wiki/Installing。
+
+这里简述一下安装的方法：
 
 ### 各版本的安装方式
 
@@ -113,7 +117,9 @@ brew install verilator
 
 ### 使用Verilator
 
-要使用Verilator，你需要：你所要测试的模块dut的verilog源码、模块测试所需要的harness（C++测试文件，里面会对测试的方式进行说明）。在这里提供一个笔者在Github上公开的例子供大家参考：https://github.com/Groupsun/Verilator_Simple_Usage。要使用Verilator，需要会书写harness代码，这个C++代码用于指导Verilator如何进行仿真。下面以上述例子中的`Decoder_Sim.cpp`来进行说明。
+要使用Verilator，你需要：你所要测试的模块dut的verilog源码、模块测试所需要的harness（C++测试文件，里面会对测试的方式进行说明）。在这里提供一个笔者在Github上公开的例子供大家参考：https://github.com/Groupsun/Verilator_Simple_Usage。
+
+要使用Verilator，需要会书写harness代码，这个C++代码用于指导Verilator如何进行仿真。下面以上述例子中的`Decoder_Sim.cpp`来进行说明。
 
 这个例子需要仿真的模块是一个3-8译码器模块。首先，使用Verilator都需要包含头文件`verilated.h`，如果需要生成波形文件，则需要包含`verilated_vcd_c.h`：
 
@@ -284,7 +290,9 @@ signal <= new_value
 signal.value = new_value
 ```
 
-在实际的测试中，其实这两者似乎没有区别，也就是说，你使用`=`还是`<=`来赋值是没什么区别的（详细可以参见issue：https://github.com/cocotb/cocotb/issues/526）。但建议在使用的过程中，最好保持一致性，即要不全部使用`=`，要不全部使用`<=`。
+在实际的测试中，其实这两者似乎没有区别，也就是说，你使用`=`还是`<=`来赋值是没什么区别的（详细可以参见[issue](https://github.com/cocotb/cocotb/issues/526)。
+
+但建议在使用的过程中，最好保持一致性，即要不全部使用`=`，要不全部使用`<=`。
 
 编写一个指导如何进行仿真的函数非常简单，你只需要知道如何给予端口激励（赋值），以及如何延时（保持上次赋值的状态一段时间）就可以了。当然，上述的全加器是一个纯的组合逻辑电路，因此没有考虑到时序的问题。如果需要测试的是时序逻辑电路，那么就需要构造一个时钟，而Cocotb当中提供了非常方便的构造时钟的api：
 
