@@ -212,11 +212,11 @@ pacman -S gtkwave
 
 所有的.vcd文件都可以直接使用GTKwave打开。打开后的主界面如下：
 
-![avatar](./photos/gtkwave-1.png)
+![GTKwave主界面](./photos/gtkwave-1.png)
 
 左侧显示的是模块的层次以及选中模块中的可以显示波形信息的信号。通过选中对应的信号，并选择"append"就可以将该信号的波形图显示在右侧的波形框图当中：
 
-![avatar](./photos/gtkwave-2.png)
+![显示信号波形](./photos/gtkwave-2.png)
 
 除此之外，还可以调整波形显示数值的格式、调整时间单位显示（简单的缩小波形即可）等，由于篇幅关系，这里将不再展开，读者可以自行尝试。
 
