@@ -68,7 +68,7 @@ PyHCL的基本类型有三种，分别是：无符号整数、有符号整数以
 # 类型的声明实际上就是实例化一个对象。PyHCL规定所有的类型规定必须声明其位宽，因此声明一个电路实体类型的方式是：
 # U.w(<width>)	width位的无符号整数类型
 # S.w(<width>)	width位的有符号整数类型
-# Bool()				布尔类型比较特殊，不需要声明位宽
+# Bool()		布尔类型比较特殊，不需要声明位宽
 
 U.w(4)		# 4位无符号整数
 S.w(32)		# 32位有符号整数
@@ -79,14 +79,14 @@ Bool()		# 布尔类型
 
 ```python
 # 可以通过Python变量来构造对应的类型的字面值：
-# U(<value>)						无符号整数类型字面值（无位宽约束）
+# U(<value>)		    无符号整数类型字面值（无位宽约束）
 # U.w(<width>)(<value>)	无符号整数类型字面值（有位宽约束）
 # 有符号整数同理
 # 布尔类型只有两种字面值：
-# Bool(True)						逻辑真
-# Bool(False)						逻辑假
+# Bool(True)			逻辑真
+# Bool(False)			逻辑假
 
-U(16)					# 字面值为16的5位无符号类型字面值，PyHCL会根据字面值的大小自动推断其位宽
+U(16)			# 字面值为16的5位无符号类型字面值，PyHCL会根据字面值的大小自动推断其位宽
 S.w(32)(200)	# 字面值为200的32位有符号类型字面值
 Bool(True)		# 字面值为真的布尔类型字面值
 ```
@@ -95,14 +95,14 @@ Bool(True)		# 字面值为真的布尔类型字面值
 
 ```python
 counter = RegInit(U.w(32)(0))		# counter是一个初始值为0的32位无符号数寄存器
-addr = Input(U.w(32))						# addr是一个32位无符号数的输入端
-jump_flag = Wire(Bool())				# jump_flag是一个布尔类型的Wire
+addr = Input(U.w(32))				# addr是一个32位无符号数的输入端
+jump_flag = Wire(Bool())		    # jump_flag是一个布尔类型的Wire
 ```
 
 回到上述的半加器代码，可以发现定义了4个IO端口，分别是`x`，`y`，`s`以及`cout`。它们的类型都是1位无符号整数。半加器的逻辑定义非常简单，只需要将逻辑表达式照写即可：
 
 ```python
-io.s <<= io.x ^ io.y			# s = x XOR y
+io.s <<= io.x ^ io.y		# s = x XOR y
 io.cout <<= io.x & io.y		# cout = x AND y
 ```
 
