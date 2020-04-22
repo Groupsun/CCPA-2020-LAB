@@ -79,7 +79,7 @@ Bool()		# 布尔类型
 
 ```python
 # 可以通过Python变量来构造对应的类型的字面值：
-# U(<value>)		    无符号整数类型字面值（无位宽约束）
+# U(<value>)			无符号整数类型字面值（无位宽约束）
 # U.w(<width>)(<value>)	无符号整数类型字面值（有位宽约束）
 # 有符号整数同理
 # 布尔类型只有两种字面值：
@@ -96,7 +96,7 @@ Bool(True)		# 字面值为真的布尔类型字面值
 ```python
 counter = RegInit(U.w(32)(0))		# counter是一个初始值为0的32位无符号数寄存器
 addr = Input(U.w(32))				# addr是一个32位无符号数的输入端
-jump_flag = Wire(Bool())		    # jump_flag是一个布尔类型的Wire
+jump_flag = Wire(Bool())			# jump_flag是一个布尔类型的Wire
 ```
 
 回到上述的半加器代码，可以发现定义了4个IO端口，分别是`x`，`y`，`s`以及`cout`。它们的类型都是1位无符号整数。半加器的逻辑定义非常简单，只需要将逻辑表达式照写即可：
