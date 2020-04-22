@@ -339,6 +339,8 @@ include $(shell cocotb-config --makefiles)/Makefile.sim
 
 Makefile中还可以指定其他很多的信息，详细可以参考官方文档：https://cocotb.readthedocs.io/en/latest/building.html
 
+编写好python的harness以及Makefile之后，可以直接通过`make`命令来执行cocotb的仿真测试功能。
+
 ## Treadle
 
 Treadle是Chisel团队开发的针对FIRRTL的执行器，可以快速进行FIRRTL代码的验证测试。它的好处是可以直接在FIRRTL代码上运行，而不需要下放到Verilog代码进行测试。但它也有显著的缺点，那就是运行效率很低，只适合于进行单元测试。Treadle的安装方式可以在官方的Github repo中找到：https://github.com/freechipsproject/treadle。
