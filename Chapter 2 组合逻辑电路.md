@@ -68,11 +68,11 @@ PyHCL的基本类型有三种，分别是：无符号整数、有符号整数以
 # 类型的声明实际上就是实例化一个对象。PyHCL规定所有的类型规定必须声明其位宽，因此声明一个电路实体类型的方式是：
 # U.w(<width>)	width位的无符号整数类型
 # S.w(<width>)	width位的有符号整数类型
-# Bool()		布尔类型比较特殊，不需要声明位宽
+# Bool		布尔类型比较特殊，不需要声明位宽
 
 U.w(4)		# 4位无符号整数
 S.w(32)		# 32位有符号整数
-Bool()		# 布尔类型
+Bool  		# 布尔类型
 ```
 
 对于PyHCL类型的电路实体，赋值也需要使用PyHCL对应类型的字面值，而不能是单纯的Python数值：
@@ -96,7 +96,7 @@ Bool(True)		# 字面值为真的布尔类型字面值
 ```python
 counter = RegInit(U.w(32)(0))		# counter是一个初始值为0的32位无符号数寄存器
 addr = Input(U.w(32))				# addr是一个32位无符号数的输入端
-jump_flag = Wire(Bool())			# jump_flag是一个布尔类型的Wire
+jump_flag = Wire(Bool)			# jump_flag是一个布尔类型的Wire
 ```
 
 回到上述的半加器代码，可以发现定义了4个IO端口，分别是`x`，`y`，`s`以及`cout`。它们的类型都是1位无符号整数。半加器的逻辑定义非常简单，只需要将逻辑表达式照写即可：
@@ -329,18 +329,18 @@ io.m <<= U(0x80) >> io.s
 class Arbiter(Module):
   io = IO(
     // FIFO
-    fifo_valid=Input(Bool())
-    fifo_ready=Output(Bool())
+    fifo_valid=Input(Bool)
+    fifo_ready=Output(Bool)
     fifo_data=Input(U.w(32))
     
     // PE0
-    pe0_valid=Output(Bool())
-    pe0_ready=Input(Bool())
+    pe0_valid=Output(Bool)
+    pe0_ready=Input(Bool)
     pe0_data=Output(U.w(32))
     
     // PE1
-    pe1_valid=Output(Bool())
-    pe1_ready=Input(Bool())
+    pe1_valid=Output(Bool)
+    pe1_ready=Input(Bool)
     pe1_data=Output(U.w(32))
   )
   
