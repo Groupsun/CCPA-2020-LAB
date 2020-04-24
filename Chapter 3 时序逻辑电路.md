@@ -92,6 +92,55 @@ class Register(Module):
 
 ## 控制逻辑
 
+PyHCL提供了一组控制逻辑原语来帮助使用者方便的书写类似高级编程语言当中的条件判断语句，其实现的原理实际上就是`Mux`原语嵌套。在时序逻辑电路当中，对控制逻辑的使用会非常多。PyHCL中实现的控制逻辑原语有三个，分别为：`when()`，`elsewhen()`以及`otherwise()`。分别对应`if`，`elif`以及`else`逻辑关系。在PyHCL中实现为对象的`__enter__()`以及`__exit__()`方法。因此，在使用上述三个逻辑控制原语的时候需要使用`with`关键字：
+
+```python
+with when(counter >= U(10)):
+  io.flag <<= Bool(True)
+  io.eflag <<= Bool(False)
+  counter <<= U(0)
+with elsewhen((counter >= 5) & (counter < 10)):
+  io.flag <<= Bool(False)
+  io.eflag <<= Bool(True)
+  counter <<= counter + U(1)
+with otherwise():
+  counter <<= counter + U(1)
+```
+
+需要注意的是，在PyHCL当中，如果需要将逻辑判断组合来写，需要在**所有**内嵌的逻辑运算中加上括号，且与运算的优先级无关。如上面例程中的`(counter >= 5) & (counter < 10)`。下面举一个实例来说明控制逻辑的运用以及进一步探讨寄存器的性质：
+
+```python
+class Register(Module):
+    io = IO(
+        flag_out=Output(Bool),
+        wflag_out=Output(Bool)
+    )
+
+    counter = RegInit(U.w(32)(0))
+    flag = RegInit(Bool(False))
+    io.flag_out <<= flag
+    with when(counter > U(9)):
+        flag <<= Bool(True)
+        counter <<= U(0)
+        io.wflag_out <<= Bool(True)
+    with otherwise():
+        counter <<= counter + U(1)
+        io.wflag_out <<= Bool(False)
+        flag <<= Bool(False)
+```
+
+上述模块逻辑实现的意义是，寄存器`counter`作为一个计数器，当计数超过10时上溢置零，并将寄存器`flag`置为真。模块有两个输出，它们赋值的方式有所不同：`flag_out`输出的是寄存器`flag`的值，而`wflag_out`输出的则是直接的逻辑字面值。这个例子的仿真结果为：
+
+![仿真结果](./photos/register3.png)
+
+可以发现，寄存器的写入会延后一个时钟周期。实际上，结合寄存器的性质可以很容易解释这一点，当寄存器的数值到达最大值之后，此时逻辑规定写入寄存器的值变为高，但是写入寄存器必须发生在时钟的上升沿，可以理解为比较寄存器值和最大值发生在20~22us之间的时钟周期的组合逻辑当中，因此写入到寄存器必须发生在后一个周期。但是`wflag_out`的输出是纯组合逻辑电路，它可以即时反应逻辑结果，因此它在`counter`为10的周期立即置高。
+
+这个例子反应的看似是一个很简单的问题，但是在实际的电路开发当中，必须时刻注意寄存器这种写的滞后性，否则开发的电路时序可能会产生诸多问题。
+
+
+
+
+
 
 
 
