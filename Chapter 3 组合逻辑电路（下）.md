@@ -10,7 +10,7 @@
 
 最简单的数据选择器就是2-1选择器，它从两个端口A、B中选择其中一个端口输出：
 
-![2-1数据选择器](/Users/sunnychen/Documents/CCPA2020-LAB/photos/Multiplexer_2-to-1.svg)
+![2-1数据选择器](./photos/Multiplexer_2-to-1.svg)
 
 在这种情况下，2-1选择器的逻辑表达式如下：
 $$
@@ -24,7 +24,7 @@ Z=(A \cdot \overline{S_0} \cdot \overline{S_1})+(B \cdot \overline{S_0} \cdot {S
 $$
 实际上，可以将上述选择器分为两个部分：1个2-4译码器以及4个三态门实现：
 
-![4-1选择器](/Users/sunnychen/Documents/CCPA2020-LAB/photos/Mux_from_3_state_buffers.png)
+![4-1选择器](./photos/Mux_from_3_state_buffers.png)
 
 ## Mux、LookUpTable模块
 
@@ -47,7 +47,7 @@ io.z <<= Mux(io.sel[1], sel_result2, sel_result1)
 
 仿真的结果如下，为了显示结果，这里人为将输入的四个端口分别预置了输入的值0～3，分别对应选择信号的值：
 
-![4-1选择器仿真波形](/Users/sunnychen/Documents/CCPA2020-LAB/photos/four2onemux.png)
+![4-1选择器仿真波形](./photos/four2onemux.png)
 
 可以注意到的是，实际上，输入以及输出端口的位宽是任意的，只要都相等即可。
 
@@ -105,7 +105,7 @@ io.m <<= U(0x80) >> io.s
 
 3-8译码器的仿真结果如下：
 
-![3-8译码器仿真波形](/Users/sunnychen/Documents/CCPA2020-LAB/photos/decoder.png)
+![3-8译码器仿真波形](./photos/decoder.png)
 
 # 实验内容与练习
 
@@ -117,7 +117,7 @@ io.m <<= U(0x80) >> io.s
 
 数据分配器是与数据选择器相反的功能器件，它将一个输入分配到2^n个输出当中，分配信号为n。如一个1-2的数据分配器如下：
 
-![1-2数据分配器](/Users/sunnychen/Documents/CCPA2020-LAB/photos/Demultiplexer.png)
+![1-2数据分配器](./photos/Demultiplexer.png)
 
 请使用PyHCL实现一个1-4数据分配器，并自行仿真验证其正确性。
 
@@ -162,7 +162,7 @@ io.m <<= U(0x80) >> io.s
 
 仲裁是一种重要的组合逻辑结构，它将输入（一般来自于一个FIFO的数据结构）进行仲裁，决定哪个输出口能够获得该数据，如下图：
 
-![仲裁](/Users/sunnychen/Documents/CCPA2020-LAB/photos/arbiter.png)
+![仲裁](./photos/arbiter.png)
 
 思考如何实现上述的仲裁结构，假设三个端口都有如下的信号：
 

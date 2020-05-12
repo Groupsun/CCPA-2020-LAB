@@ -62,7 +62,7 @@ ar = [RegInit(U.w(32)(0)) for _ in range(4)]
 
 FIR滤波器的结构图如下，下图中的系数记为b：
 
-![FIR滤波器结构](/Users/sunnychen/Documents/CCPA2020-LAB/photos/fir_filter.svg)
+![FIR滤波器结构](./photos/fir_filter.svg)
 
 这里提供一个参数化实现的模版：
 
@@ -97,7 +97,7 @@ def firfilter(width: int, consts: List):
 
 考虑实现一个神经网络当中全连接层的神经元结构。一个全连接层中的神经元所要完成的计算工作包括：对n个输入以及对应的n个权重进行MAC运算（乘加累积运算），并将结果作为激活函数的输入，最后得到该神经元的输出结果。一个简单的全连接神经元的结构如下图：
 
-![神经元结构](/Users/sunnychen/Documents/CCPA2020-LAB/photos/neuron.png)
+![神经元结构](./photos/neuron.png)
 
 为了简化实现，规定数值输入以及权重的输入均为二进制整数。且忽略激活函数中的threshold因子，下面给出神经元的模块模版：
 
