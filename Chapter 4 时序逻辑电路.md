@@ -248,7 +248,7 @@ class SaturatingCounter(Module):
 
 - 模块当中的FIFO核心数据结构由3个32位的无符号整数寄存器构成；
 - 输入端口`en`，布尔类型，当`en`置高时才会插入数据到队列当中；
-- 输入端口`value`，32位无符号整数，数据输入端口；
+- 输入端口`v`，32位无符号整数，数据输入端口；
 - 输入端口`out_en`，布尔类型，当`out_en`置高时才会将队列中的队列头弹出到数据输出端口；
 - 输出端口`out`，32位无符号整数，数据输出端口，若`out_en`为低，则输出为0，否则输出队列头数据；
 
@@ -258,7 +258,7 @@ class SaturatingCounter(Module):
 class FIFO(Module):
   io = IO(
   	en=Input(Bool),
-    value=Input(U.w(32)),
+    v=Input(U.w(32)),
     out_en=Input(Bool),
     out=Output(U.w(32))
   )
